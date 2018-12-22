@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p3">
+      <!-- 查看未来七天会议 -->
+      <select id="nextmeeting" parameterType="int" resultType="com.vo.domeeting">
+      select m.*,mr.roomname as roomname from meeting m,meetingroom mr where meetingid in(
+      select meetingid from meetingparticipants where employeeid = #{employeeid} )  and m.roomid = mr.roomid 
+      and m.status=0
+      <!--  strttime &gt #{nexttime} -->
+      </select>
+      
+      <!--取消的会议 -->
+      <select id="canselmeeting" parameterType="int" resultType="com.vo.domeeting">
+      select m.*,mr.roomname as roomname from meeting m,meetingroom mr where meetingid in(
+      select meetingid from meetingparticipants where employeeid = #{employeeid} )  and m.roomid = mr.roomid 
+      and m.status=1
+      </select>
+      <!-- 取消会议 -->
+	  <select id="cancelmeeting" parameterType="int" resultType="com.vo.CancelMeeting">
+	  		select starttime,meetingname from meeting where meetingid = #{meetingid}
+	  </select>      
+      <update id="updatereason" parameterType="com.vo.CancelMeeting"> 
+      		update meeting set canceledreason = #{reason}, canceledtime = #{canceledtime},status = 1 where meetingid=#{meetingid}
+      </update>
+      <select id="getcount" resultType="int">
+            select visitcount from counter
+      </select>
+      <select id="updatecount" parameterType="int">
+      	   update counter set visitcount = #{newvisitcount}
+      </select>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+</mapper>

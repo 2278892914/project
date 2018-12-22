@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   					   http://www.springframework.org/schema/aop 
+   					   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    				   http://www.springframework.org/schema/tx 
+    				   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    				   http://www.springframework.org/schema/context 
+                       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- spring主配置文件 -->
+	<!--步骤一：配置数据源 -->
+	<bean id="dataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 连接数据库的驱动类 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<!-- 连接数据库的url -->
+		<property name="jdbcUrl" value="jdbc:mysql://60.205.224.93:3306/wx"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="root"></property>
+		<!-- 连接数池的最大连接数-->
+		<property name="maxPoolSize" value="500"></property>
+		<!-- 连接数池的最小连接数-->
+		<property name="minPoolSize" value="1"></property>
+		<!-- 初始化连接数-->
+		<property name="initialPoolSize" value="20"></property>
+		<!-- 连接的最大空闲时间，超时的连接将被丢弃，单位：秒-->
+		<property name="maxIdleTime" value="10"></property>
+		<!-- 没有连接可用时，等待的连接时间，单位：毫秒-->
+		<property name="checkoutTimeout" value="2000"></property>
+		
+	</bean>
+
+
+	<!--步骤二：配置MyBatis的SqlSessionFactory工厂 -->
+         <!-- 通过SqlSessionFactoryBean来创建一个sqlSessionFactory -->
+         
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 给指定包中的对象定义类型别名，名称是对象名，然后首字母小写 -->
+		<property name="typeAliasesPackage" value="com.entity"></property>
+	</bean>
+		
+
+
+
+
+
+	<!--步骤2-1：mybatis自动扫描加载sql映射文件和接口 -->
+	<!-- MapperScannerConfigurer：负责扫描指定包中的接口和接口的对应的sql映射文件，然后给每个接口生成
+	动态代理对象，同时通过其内部维护的SqlSessionTemplate对象负责打开session，提交和回滚事物，关闭session
+	等操作 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.mapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+		
+
+
+	<!--步骤三：配置事务管理类对象 -->
+	<!-- <bean id="tm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean> -->
+
+		
+
+	<!--步骤四：配置事务的传播特性 -->
+	<!-- 	<tx:advice id="txadvice" transaction-manager="tm">
+		<tx:attributes>
+			<tx:method name="select*"/>
+			<tx:method name="check*"/>
+			<tx:method name="insert*"/>
+			<tx:method name="add*"/>
+			<tx:method name="update*"/>
+			<tx:method name="modify*"/>
+			<tx:method name="delete*"/>
+			<tx:method name="drop*"/>
+		</tx:attributes>
+	</tx:advice> -->
+
+
+
+	<!--步骤五：配置事务的AOP切入点，并织入事务处理 -->
+	<!-- 	<aop:config>
+		定义切入点
+		<aop:pointcut expression="execution(public * com.serviceImpl.*.*(..))" id="pt1"/>
+		在特定的连接点，通知所开启的事务针对所提供的方法
+		<aop:advisor advice-ref="txadvice" pointcut-ref="pt1"/>
+	</aop:config>
+ -->
+
+</beans>

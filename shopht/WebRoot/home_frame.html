@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" href="css/base.css" type="text/css" />
+ <script src="js/echarts.min.js" type="text/javascript"></script>
+ <script src="js/china.js" type="text/javascript"></script>
+ <script>
+ 	function randomData() {
+    	return Math.round(Math.random()*1000);
+	}
+
+option = {
+    title: {
+        text: '商品销量',
+        subtext: '纯属虚构',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data:['家电','酒水饮料','服饰']
+    },
+    visualMap: {
+        min: 0,
+        max: 2500,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],           // 文本，默认为数值文本
+        calculable: true
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            dataView: {readOnly: false},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '家电',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:[
+                {name: '北京',value: randomData() },
+                {name: '天津',value: randomData() },
+                {name: '上海',value: randomData() },
+                {name: '重庆',value: randomData() },
+                {name: '河北',value: randomData() },
+                {name: '河南',value: randomData() },
+                {name: '云南',value: randomData() },
+                {name: '辽宁',value: randomData() },
+                {name: '黑龙江',value: randomData() },
+                {name: '湖南',value: randomData() },
+                {name: '安徽',value: randomData() },
+                {name: '山东',value: randomData() },
+                {name: '新疆',value: randomData() },
+                {name: '江苏',value: randomData() },
+                {name: '浙江',value: randomData() },
+                {name: '江西',value: randomData() },
+                {name: '湖北',value: randomData() },
+                {name: '广西',value: randomData() },
+                {name: '甘肃',value: randomData() },
+                {name: '山西',value: randomData() },
+                {name: '内蒙古',value: randomData() },
+                {name: '陕西',value: randomData() },
+                {name: '吉林',value: randomData() },
+                {name: '福建',value: randomData() },
+                {name: '贵州',value: randomData() },
+                {name: '广东',value: randomData() },
+                {name: '青海',value: randomData() },
+                {name: '西藏',value: randomData() },
+                {name: '四川',value: randomData() },
+                {name: '宁夏',value: randomData() },
+                {name: '海南',value: randomData() },
+                {name: '台湾',value: randomData() },
+                {name: '香港',value: randomData() },
+                {name: '澳门',value: randomData() }
+            ]
+        },
+        {
+            name: '酒水饮料',
+            type: 'map',
+            mapType: 'china',
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:[
+                {name: '北京',value: "a" },
+                {name: '天津',value: randomData() },
+                {name: '上海',value: randomData() },
+                {name: '重庆',value: randomData() },
+                {name: '河北',value: randomData() },
+                {name: '安徽',value: randomData() },
+                {name: '新疆',value: randomData() },
+                {name: '浙江',value: randomData() },
+                {name: '江西',value: randomData() },
+                {name: '山西',value: randomData() },
+                {name: '内蒙古',value: randomData() },
+                {name: '吉林',value: randomData() },
+                {name: '福建',value: randomData() },
+                {name: '广东',value: randomData() },
+                {name: '西藏',value: randomData() },
+                {name: '四川',value: randomData() },
+                {name: '宁夏',value: randomData() },
+                {name: '香港',value: randomData() },
+                {name: '澳门',value: randomData() }
+            ]
+        },
+        {
+            name: '服饰',
+            type: 'map',
+            mapType: 'china',
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:[
+                {name: '北京',value: randomData() },
+                {name: '天津',value: randomData() },
+                {name: '上海',value: randomData() },
+                {name: '广东',value: randomData() },
+                {name: '台湾',value: randomData() },
+                {name: '香港',value: randomData() },
+                {name: '澳门',value: randomData() }
+            ]
+        }
+    ]
+};
+ 	window.onload = function(){
+ 		 var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+       
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+ 	}
+ 	
+ </script>
+</head>
+
+<body>
+    <div class="main_right_top">您现在所在位置 > <span>首页</span></div>
+    <div class="main_right_body"> 
+    	<div class="body_content">
+            <div class="project_detail">
+				<h1 class="project_detail_title">登录信息</h1>
+				<ul class="p_form">
+					<li>
+						<label>用户名：</label>
+						<span class="p_name">小白白</span>	
+					</li>
+					<li>
+						<label>登录时间：</label>
+						<span class="p_name">2017-7-7 11:11:11</span>	
+					</li>
+					
+				</ul>
+			</div><!--project_detail-->
+			<div class="biao_list">
+				<div class="set_all">
+					<h1 class="biao_title">最新订单信息</h1>
+					<a class="more_link">更多</a>
+				</div><!--set_all-->
+				 <table border="0" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th>订单号</th>
+							<th>收件人</th>
+							<th>订单状态</th>
+							<th>订单总价</th>
+							<th>创建时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>10111000111</td>
+							<td>狗蛋</td>
+							<td><span class="warning_number">已付款</span></td>
+							<td>
+								45555
+							</td>
+							<td>
+								2017-10-10 11:11:11
+							</td>
+							<td><a href="#"  class="td_detail">查看</a></td>
+						</tr>
+						<tr class="tr_two">
+							<td>10111000111</td>
+							<td>狗蛋</td>
+							<td><span class="warning_number">已付款</span></td>
+							<td>
+								45555
+							</td>
+							<td>
+								2017-10-10 11:11:11
+							</td>
+							<td><a href="#"  class="td_detail">查看</a></td>
+						</tr>
+						<tr>
+							<td>10111000111</td>
+							<td>狗蛋</td>
+							<td><span class="warning_number">已付款</span></td>
+							<td>
+								45555
+							</td>
+							<td>
+								2017-10-10 11:11:11
+							</td>
+							<td><a href="#"  class="td_detail">查看</a></td>
+						</tr>
+						<tr class="tr_two">
+							<td>10111000111</td>
+							<td>狗蛋</td>
+							<td><span class="warning_number">已付款</span></td>
+							<td>
+								45555
+							</td>
+							<td>
+								2017-10-10 11:11:11
+							</td>
+							<td><a href="#"  class="td_detail">查看</a></td>
+						</tr>
+						<tr>
+							<td>10111000111</td>
+							<td>狗蛋</td>
+							<td><span class="warning_number">已付款</span></td>
+							<td>
+								45555
+							</td>
+							<td>
+								2017-10-10 11:11:11
+							</td>
+							<td><a href="#"  class="td_detail">查看</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div><!--biao_list-->
+			<div style="width: 1000px;height: 600px;margin: 0px auto;">
+				<canvas id="main" width="1000" height="600">
+				
+				</canvas>
+			</div>
+			
+         </div><!--body_content-->
+    </div> <!--main_right_body-->
+</body>
+</html>

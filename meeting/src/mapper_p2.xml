@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p2">
+	<!-- 查询用户密码 -->
+	<select id="getuserpassword" resultType="String" parameterType="String">
+		select password from employee where username=#{username}
+	</select>
+	<!-- 修改密码 -->
+	<update id="changepassword" parameterType="com.vo.Password">
+		update employee set password = #{nowpassword} where username=#{username}
+	</update>
+	<!-- 查询员工 -->
+	<select id="listemp" parameterType="int" resultType="com.vo.employee">
+		select * from employee where departmentid=#{departmentid}
+	</select>
+	<!-- 预定会议，插入数据 -->
+	<insert id="domeet" parameterType="com.vo.domeeting">
+		insert  into meeting(meetingname,numberofparticipants,starttime,endtime,reservationtime,roomid,description,status,reservationistid) 
+		values(#{meetingname},#{numberofparticipants},#{starttime},#{endtime},#{reservtime},#{roomid},#{description},2,#{employeeid})
+	</insert>
+	<!--获取用户名的ID -->
+	<select id="getempid" parameterType="String" resultType="int">
+		select employeeid from employee where username=#{username}
+	</select>
+	<!-- 获取数据库meeting当中的最后一条记录的id值 -->
+	<select id="getlastid" resultType="int">
+	   select meetingid from meeting order by meetingid  desc limit 1
+	</select>
+	<!-- 插入会议记录中的员工id值 -->
+	<insert id="insertemployee" parameterType="com.vo.domeeting">
+	   insert into meetingparticipants(meetingid,employeeid) values(#{meetingid},#{ee})
+	</insert>
+	<!-- 搜索会议 -->
+	<select id="serchmeeting" resultType="com.vo.domeeting">
+		select m.*,mr.roomname  as roomname from meeting m,meetingroom mr where m.roomid= mr.roomid limit #{pagesize},3
+	</select>
+	<!-- 获取会议的总条数 -->
+	<select id="getmeetingcount" resultType="int"> 
+		select count(*) from meeting
+	</select>
+	<select id="meetingdetail" resultType="com.vo.domeeting" parameterType="int">
+		select * from meeting where meetingid = #{meetingid}
+	 <!-- select m.*,em.employeename as employeename,em.phone as phone ,
+	em.email as email from meeting m,employee em,meetingparticipants ms 
+	where ms.employeeid = em.employeeid and m.meetingid=#{meetingid} and
+	 ms.meetingid = m.meetingid -->
+	</select>
+	<select id="employeedetail" resultType="com.vo.domeeting" parameterType="int">
+	select em.employeename as employeename,em.phone as phone ,
+	em.email as email from meeting m,employee em,meetingparticipants ms 
+	where ms.employeeid = em.employeeid and m.meetingid=#{meetingid} and
+	 ms.meetingid = m.meetingid
+	</select>
+	<!-- 按照会议室名字进行查找 -->
+	<select id="getcount01" parameterType="com.vo.SerchMeet" resultType="int">
+		select count(*) from meeting where meetingname = #{meetingname}
+	</select>
+	<!-- 按照会议查找 -->
+	<select id="serchmeeting01" parameterType="com.vo.SerchMeet" resultType="com.vo.domeeting">
+		select m.*,mr.roomname  as roomname from 
+		meeting m,meetingroom mr where m.roomid= mr.roomid and m.meetingname=#{meetingname}
+		limit #{pagesize},3 
+	</select>
+	<!-- 按照会议室名称查找 -->
+	<select id="getcount02" parameterType="com.vo.SerchMeet" resultType="int">
+		select count(*)  from meeting m ,meetingroom mr where m.roomid = mr.roomid and mr.roomname=#{roomname}
+	</select>	
+	<!-- 按照会议室名称查找 -->
+	<select id="serchmeeting02" parameterType="com.vo.SerchMeet" resultType="com.vo.domeeting">
+		select m.*,mr.roomname  as roomname from 
+		meeting m,meetingroom mr where m.roomid= mr.roomid and mr.roomname=#{roomname}
+		limit #{pagesize},3
+	</select>
+	
+	
+	
+</mapper>

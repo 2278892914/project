@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p1">
+
+	<!-- 验证用户登录 -->
+	<select id="login" parameterType="com.vo.User" resultType="com.vo.User">
+		select * from login where username=#{username} and
+		password=#{password}
+	</select>
+	<!-- 查询品类 -->
+	<select id="selectplist" resultType="com.vo.PlVO" parameterType="Map">
+		select * from s_pl limit #{page},#{pagesize}
+	</select>
+	<!-- 增加品类 -->
+	<insert id="add_pl" parameterType="String">
+		insert into s_pl(pname) values(#{pname})
+	</insert>
+	<!-- 查询品类的总数量 -->
+	<select id="getplistcount" resultType="int">
+		select count(*) from s_pl
+	</select>
+	<!-- 更改品类名称 -->
+	<select id="update_pl" parameterType="int" resultType="com.vo.PlVO">
+		select * from s_pl where id=#{id}
+	</select>
+	<!-- 执行更改 -->
+	<update id="updatepl" parameterType="com.vo.PlVO">
+		update s_pl set pname=#{pname} where id=#{id}
+	</update>
+	<!-- 删除品类 -->
+	<delete id="delete_pl" parameterType="int">
+		delete from s_pl where id=#{id}
+	</delete>
+	<!-- 查询子品类，先是获取父品类名称 -->
+	<select id="lookplname" parameterType="int" resultType="String">
+		select pname from s_pl where id = #{id}
+	</select>
+	<!-- 获取子品类的总数量 -->
+	<select id="zplistcount" resultType="int" parameterType="int">
+		select count(*) from s_zpl where pid=#{id}
+	</select>
+	<!--查询子品类列表 -->
+	<select id="look_zpl" resultType="com.vo.ZPlVO" parameterType="Map">
+		select * from s_zpl where pid=#{id} limit #{page},#{pagesize}
+	</select>
+	<!-- 修改子品类名称，获取子品类名称 -->
+	<select id="update_zpl" parameterType="int" resultType="com.vo.ZPlVO">
+		select * from s_zpl where id=#{id}
+	</select>
+	<!-- 修改子品类名称，执行 -->
+	<update id="updatezpl" parameterType="com.vo.ZPlVO">
+		update s_zpl set pcname=#{pcname} where id=#{id}
+	</update>
+	<!-- 删除子品类名称 -->
+	<delete id="delete_zpl" parameterType="int">
+		delete from s_zpl where id=#{id}
+	</delete>
+	<!-- 添加子品类名称 -->
+	<insert id="add_zpl_sure" parameterType="Map">
+		insert into s_zpl(pcname,pid) values(#{pcname},#{id})
+	</insert>
+	<!-- 用户管理 -->
+	<select id="showuser" resultType="com.vo.Userlist">
+		select id,username,email from user
+	</select>
+	<!-- 删除用户 -->
+	<delete id="delete_user" parameterType="int">
+		delete from user where id=#{id}
+	</delete>
+	<!-- 添加商品，首先展示品类以及子品类 -->
+	<select id="showpl" resultType="com.vo.PlVO">
+		select id,pname from s_pl
+	</select>
+	<!-- 展示子品类 -->
+	<select id="showpl_2" parameterType="int" resultType="com.vo.PlVO">
+		select id,pcname from s_zpl where pid = #{id}
+	</select>
+
+	<!-- wx -->
+	<select id="test" resultType="com.vo.Area">
+	    select * from t_first;
+	</select>
+	<!--删除信息 -->
+	<delete id="testdelete" parameterType="int">
+	    delete from t_first where areaId = #{areaId}
+	</delete>
+	<select id="findById" parameterType="int" resultType="com.vo.Area">
+	    select * from t_first where areaId = #{areaId}
+	</select>
+	<update id="modifyarea" parameterType="com.vo.Area">
+	    update  t_first set areaName=#{areaName} , priority = #{priority} where areaId = #{areaId}
+	 
+	</update>
+	
+	<insert id="addarea" parameterType="com.vo.Area">
+	    insert into t_first(areaName,priority) values(#{areaName},#{priority})
+	    
+	</insert>
+</mapper>

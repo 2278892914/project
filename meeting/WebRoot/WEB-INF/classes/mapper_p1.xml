@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p1">
+	<!-- 注册时查询所在部门 -->
+	<select id="selectdepartment" resultType="com.vo.Department">
+	   select * from department
+	</select>
+	
+	<!-- 检验注册员工用户名是否重名 -->
+	<select id="usrexit" parameterType="String" resultType="String">
+		select employeename from employee where username=#{user}
+	</select>
+	
+	<!-- 注册员工信息 -->
+	<insert id="insertemployee" parameterType="com.vo.register">
+		insert into employee(employeeid,employeename,username,phone,email,status,departmentid,password,role)
+			values(#{employeeid},#{employeename},#{username},#{phone},#{email},0,#{departmentid},#{password},2)
+	</insert>
+	
+	<!-- 登录状态查询 -->
+	<select id="login01" parameterType="String" resultType="int">
+		select status from employee where username=#{username}
+	</select>
+	<!-- 账户密码是否正确 -->
+	<select id="login02" parameterType="com.vo.Login" resultType="String">
+		select employeename from employee where username=#{accountname} and password=#{password}
+	</select>
+	<!-- 用户角色查询 -->
+	<select id="login03" parameterType="String" resultType="int">
+	    select role from employee where username = #{username}
+	</select>
+	
+	<!-- 查询部门 -->
+	<select id="lookdept" resultType="com.vo.Department">
+		select * from department
+	</select>
+	
+	<!-- 删除部门 -->	
+	<delete id="deldept" parameterType="int">
+		delete  from department where departmentid=#{deptid}
+	</delete>
+	
+	<!-- 增加部门 -->
+	<insert id="adddept" parameterType="String">
+		insert into department(departmentname) values(#{adddepartmentname})
+	</insert>
+	
+	<!-- 注册审批,,,先查询待审批用户 -->
+	<select id="regs" resultType="com.vo.register">
+		select employeeid,employeename,username,phone,email from employee where status=0 and role=2
+	</select>
+	<!-- 通过用户注册 -->
+	<update id="approveworker" parameterType="String">
+	    update	employee set status=1 where username=#{username}
+	    
+	</update>
+	<!-- 不通过用户注册 -->
+	<update id="refuseworker" parameterType="String">
+	    update	employee set status=2 where username=#{username}
+	</update>
+	
+	<!-- 搜索员工   初始化   已批准 -->
+	<select id="serchempagree" resultType="com.vo.employee" parameterType="int">
+		select employeeid,employeename,username,phone,email from employee where status=1 and role=2 limit #{pagesize},3
+	</select>
+	
+	<!-- 获得总条数 -->
+	<select id="serchempcount" resultType="int">
+		select count(*) from employee where status=1 and role=2 
+	</select>
+	
+	<!-- 搜索员工，按照姓名查询 -->
+	<select id="employeename" resultType="com.vo.employee" parameterType="com.vo.SerchEmployee">
+		select employeeid,employeename,username,phone,email from employee
+		 where employeename=#{employeename} and status=#{status} limit #{pagesize},3
+	</select>
+	
+	
+	
+	<!-- 搜索员工，按照账户名
+	查询 -->
+	<select id="accountname" resultType="com.vo.employee" parameterType="com.vo.SerchEmployee">
+		select employeeid,employeename,username,phone,email from employee
+		 where username=#{accountname} and status=#{status} limit #{pagesize},3
+	</select>
+	
+	
+	<!-- 搜索员工，按照状态查询 -->
+	<select id="status" resultType="com.vo.employee" parameterType="com.vo.SerchEmployee">
+		select employeeid,employeename,username,phone,email from employee
+		 where status=#{status} limit #{pagesize},3
+	</select>
+
+    <!-- 总条数的查询 -->
+    <select id="getcount01" resultType="int" parameterType="com.vo.SerchEmployee">
+    	select count(*) from employee where employeename=#{employeename} and status=#{status}
+    </select>
+    <select id="getcount02" resultType="int" parameterType="com.vo.SerchEmployee">
+    	select count(*) from employee where username=#{accountname} and status=#{status}
+    </select>
+    <select id="getcount03" resultType="int" parameterType="com.vo.SerchEmployee">
+    	select count(*) from employee where status=#{status}
+    </select>
+    <!-- 关闭账号 -->
+    <update id="closeaccount" parameterType="String"> 
+ 		update	employee set status=-1 where username=#{account}
+    </update>
+    
+    <!-- 添加会议室 -->
+    <insert id="addmeeting" parameterType="com.vo.meeting">
+    	insert into meetingroom(roomnum,roomname,capacity,status,description)
+    	 values(#{roomnum},#{roomname},#{capacity},#{status},#{description})
+    </insert>
+    <!-- 查看会议室 -->
+   	<select id="lookmeeting" resultType="com.vo.meeting">
+   		select * from meetingroom
+   	</select>
+   <!--查看会议室详情 -->
+   <select id="lookmeetingdetail" resultType="com.vo.meeting" parameterType="int">
+   	select * from meetingroom where roomnum=#{roomnum}
+   </select>
+   <!-- 修改会议室 -->
+   <update id="updatemeeting" parameterType="com.vo.meeting">
+   update meetingroom set roomnum=#{roomnum},roomname=#{roomname},capacity=#{capacity},status=#{status},description=#{description} where roomid=#{roomid}
+   </update>
+   <!-- 预定会议，查询会议室名称 -->
+   <select id="lookmeetname" resultType="com.vo.meeting">
+   		select * from meetingroom
+   </select>
+   
+   
+   
+   
+</mapper>

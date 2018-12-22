@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配置的头文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 自动扫描指定包中含有@Repository，@Service，@Controller注解的对象 -->
+	<!-- 注意在指定包的时候，通常是一个controller和一个service实现类,dao层则不需要，
+	因为在spring-mybatis的配置文件当中，已经为每个接口生成了动态代理对象，以及通过其内部维护的
+	SqlSessionTemplate对象负责打开session，提交和回滚
+	因此只需在controller和service实现类当中添加相应的注解 -->
+	<context:component-scan base-package="com.controller,com.serviceImpl"></context:component-scan>
+	
+	<!-- 将普通字符串配合ResponseBody输出到客户端 -->
+	<bean id="stringConverter" class="org.springframework.http.converter.StringHttpMessageConverter">    
+	    <constructor-arg value="UTF-8" />    
+	</bean>
+	
+	<!-- 定义将对象或者集合转换为json格式字符串对象 -->
+	<bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+   		<property name="supportedMediaTypes" value="application/json;charset=utf-8" />
+	</bean>
+
+
+	<!-- 配置映射处理器，将url请求映射给某个具体的handler -->
+	<!-- 启动springmvc的注解，在ioc容器中注册RequestMappingHandlerMapping -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<ref bean="stringConverter"/>
+			<ref bean="jsonConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 配置视图解析器，作用一：通过InternalResourceViewResolver将逻辑视图转换为真实的物理视图
+	     作用二：通过View对象渲染数据到jsp中
+	 -->
+	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	 	<!-- 前缀：将逻辑视图名拼接指定的url前缀 -->
+	 	<property name="prefix" value="/"></property>
+	 	<!-- 后缀：将逻辑视图名拼接成指定的后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	 </bean>
+	 
+	<!-- 文件上传的类型解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<!-- 配置文件的编码方式 -->
+    	<property name="defaultEncoding" value="utf-8" />
+   	 	<!-- 设置上传文件的最大尺寸为5MB -->
+    	<property name="maxUploadSize" value="5242880"/>
+		<!-- 配置缓存 -->
+		<property name="maxInMemorySize" value="40960"/>
+	</bean>
+	 
+	<!-- 定义拦截器链 -->
+<!-- 	<mvc:interceptors> -->
+		<!-- 定义计算控制器耗时的拦截器 -->
+<!-- 		<mvc:interceptor> -->
+<!-- 			mvc:mapping:需要拦截的url请求  -->
+<!-- 			<mvc:mapping path="/**"/> -->
+<!-- 			<bean class="com.userInceptor.ControllerTime"></bean> -->
+<!-- 		</mvc:interceptor> -->
+		
+		<!-- 定义权限验证拦截器 -->
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/**"/> -->
+<!-- 			<mvc:exclude-mapping path="/login.do"/> -->
+<!-- 			<mvc:exclude-mapping path="/checklogin.do"/> -->
+			<!-- 放行指定的url -->
+<!-- 			<bean class="com.userInceptor.CheckUserLogin"></bean> -->
+<!-- 		</mvc:interceptor> -->
+		
+<!-- 	</mvc:interceptors> -->
+	
+	
+</beans>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant value="spring" name="struts.objectFactory" />
+
+	<package name="p1" extends="struts-default">
+		<!-- 登录 -->
+		<action name="login" class="login" method="login">
+			<result name="success">home.jsp</result>
+			<result name="failed">login.jsp</result>
+		</action>
+		<!-- 品类信息 -->
+		<action name="plist" class="pl" method="selectplist">
+			<param name="page">1</param>
+			<param name="pagesize">4</param>
+			<result name="success">pl_list.jsp</result>
+		</action>
+		<!--添加品类 -->
+		<action name="add_pl" class="pl" method="add_pl">
+			<result name="success" type="redirectAction">plist.action</result>
+		</action>
+		<!-- 更改品类名称 先是查询品类名称 -->
+		<action name="update_pl" class="pl" method="update_pl">
+			<result name="success">update_pl.jsp</result>
+		</action>
+		<!-- 更改品类名称 执行查询 -->
+		<action name="updatepl" class="pl" method="updatepl">
+			<result name="success" type="redirectAction">plist.action</result>
+		</action>
+		<!-- 删除品类 -->
+		<action name="delete_pl" class="pl" method="delete_pl">
+			<result name="success" type="redirectAction">plist.action</result>
+		</action>
+		<!-- 查询子品类 -->
+		<action name="look_zpl" class="pl" method="look_zpl">
+			<param name="page">1</param>
+			<param name="pagesize">4</param>
+			<result name="success">zpl_list.jsp</result>
+		</action>
+		<!-- 更改子 品类名称 -->
+		<action name="update_zpl" class="pl" method="update_zpl">
+			<result name="success">update_zpl.jsp</result>
+		</action>
+		<!-- 确认更改 -->
+		<action name="updatezpl" class="pl" method="updatezpl">
+			<result name="success" type="redirectAction">plist.action</result>
+		</action>
+		<!-- 删除子品类 -->
+		<action name="delete_zpl" class="pl" method="delete_zpl">
+			<result name="success" type="redirectAction">plist.action</result>
+		</action>
+		<!-- 集合 -->
+		<action name="map" class="pl" method="map">
+
+		</action>
+		<!-- 添加子品类 -->
+		<action name="add_pl_child" class="pl" method="add_zpl">
+			<result name="success">add_child_pl.jsp</result>
+		</action>
+		<!-- 添加字子品类 -->
+		<action name="add_zpl_sure" class="pl" method="add_zpl_sure">
+			<result name="success" type="redirectAction">look_zpl.action</result>
+		</action>
+		<!-- 用户管理 -->
+		<action name="user_list" class="user" method="showuser">
+			<result name="success">user_list.jsp</result>
+		</action>
+		<!-- 删除用户 -->
+		<action name="delete_user" class="user" method="delete_user">
+			<result name="success" type="redirectAction">user_list.action</result>
+		</action>
+		<!--添加商品 -->
+		<action name="add_commodity" class="sp" method="add_sp">
+			<result name="success">add_commodity.jsp</result>
+		</action>
+		<!-- 展示子品类 异步请求，所以没有返回值 -->
+		<action name="add_sp_zpl" class="sp" method="add_zpl">
+		</action>
+		<!-- 添加商品 -->
+		<action name="add_sp_detail" class="sp" method="add_sp_detail">
+			<result name="success" type="redirectAction">commodity_list.action</result>
+		</action>
+		<!-- 商品管理 -->
+		<action name="commodity_list" class="sp" method="commodity_list">
+			<result name="success">commodity_list.jsp</result>
+		</action>
+		<!-- 商品详情 -->
+		<action name="commodity_info" class="sp" method="commodity_info">
+		    <result name="success">commodity_info.jsp</result>
+		</action>
+		<!-- 修改商品，先是查询 -->
+		<action name="update_commodity_info" class="sp" method="update_commodity_info">
+		<result name="success">update_commodity.jsp</result>
+		</action>
+		<!-- 删除商品 -->
+		<action name="delete_commodity_info" class="sp" method="delete_commodity_info">
+		<result name="success" type="redirectAction">commodity_list.action</result>
+		</action>
+		<!-- 更改商品               临时追加异步请求 -->
+		<action name="sa_findPlList" class="sp" method="sa_findPlList">
+		</action>
+		<!-- 更改商品状态信息    异步请求-->
+		<action name="sa_updateShopState" class="sp" method="sa_updateShopState">
+		</action>
+		<!-- 订单list -->
+		<action name="order_list" class="od" method="order_list">
+			<result name="success">order_list.jsp</result>
+		</action>
+		<!-- 查询具体某个订单 -->
+		<action name="select_order" class="od" method="select_order">
+		<result name="success">order_list.jsp</result>
+		</action>
+		<!-- 订单详情 -->
+		<action name="order_info" class="od" method="order_info">
+		<result name="success">order_info.jsp</result>
+		</action>
+		<!-- 取消订单           删除订单-->
+		<action name="delete_order" class="od" method="delete_order">
+		<result name="success" type="redirectAction">order_list.action</result>
+		</action>
+		<!-- 发货 -->
+		<action name="sendgoods" class="od" method="sendgoods">
+		<result name="success" type="redirectAction">order_info.action</result>
+		</action>
+		<!-- 上传图片 -->
+		<action name="upfile" class="pl" method="upfile">
+		
+		</action>
+
+         <!-- 测试 -->
+         <action name="test" class="test" method="modelmap"></action>
+         <action name="testdelete" class="test" method="testdelete"></action>
+         <!-- 编辑 -->
+         <action name="findbyId" class="test" method="findbyId"></action>
+		 <!-- 添加 -->
+		 <action name="addarea" class="test" method="addarea">
+		 </action>
+		 <!-- 更新 -->
+		 <action name="modifyarea" class="test" method="modifyarea">
+		 </action>
+	</package>
+</struts>

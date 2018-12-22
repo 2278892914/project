@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>rent</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 
+ 
+ 用户登录  
+  
+  <servlet>
+  <servlet-name>rent</servlet-name>
+  <servlet-class>yst.loginserver</servlet-class>
+  </servlet>
+  <servlet-mapping> 
+  <servlet-name>rent</servlet-name>
+  <url-pattern>/login.do</url-pattern>
+  </servlet-mapping>
+  
+  
+	展示车辆品牌信息
+   <servlet>
+  <servlet-name>showcar</servlet-name>
+  <servlet-class>yst.shoucarservice</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>showcar</servlet-name>
+  <url-pattern>/shoucar.do</url-pattern>
+  </servlet-mapping>
+  
+  
+ 根据车辆品牌查询车辆型号
+  <servlet>
+  <servlet-name>findtype</servlet-name>
+  <servlet-class>yst.Typeservlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>findtype</servlet-name>
+  <url-pattern>/findType.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  测试  
+  <servlet>
+  <servlet-name>aa</servlet-name>
+  <servlet-class>yst.Test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>aa</servlet-name>
+  <url-pattern>/mm.do</url-pattern>
+  </servlet-mapping>
+  
+  
+ 添加车辆信息  
+  <servlet>
+  <servlet-name>addcar</servlet-name>
+  <servlet-class>yst.Addcar</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>addcar</servlet-name>
+  <url-pattern>/addcar.do</url-pattern>
+  </servlet-mapping>
+  
+  
+查询车辆
+  <servlet>
+  <servlet-name>carlist</servlet-name>
+  <servlet-class>yst.Carlist</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>carlist</servlet-name>
+  <url-pattern>/Carlist.do</url-pattern>
+  </servlet-mapping>
+  -->
+  <!-- 测试 -->
+  <servlet>
+  <servlet-name>test</servlet-name>
+  <servlet-class>test.Test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>test</servlet-name>
+  <url-pattern>/test.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+  <servlet-name>control</servlet-name>
+  <servlet-class>com.action.Control</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>control</servlet-name>
+  <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  <filter-name>testfilter</filter-name>
+  <filter-class>filter.TestFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  <filter-name>testfilter</filter-name>
+  <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  
+</web-app>

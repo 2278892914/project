@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type = "text/javascript">
+
+	window.onload = function(){
+		var bt = document.getElementById("bt");
+		bt.onclick = function(){
+			//创建请求对象
+			var httpRequest = new XMLHttpRequest();
+			httpRequest.onreadystatechange = function(){
+				
+				if (httpRequest.readyState == 4&&httpRequest.status==200){
+					alert(httpRequest.responseText);
+				}
+			}
+			//初始化请求信息，1请求方法  2请求的url  3 true同步 false异步
+			httpRequest.open("post","mm.do",true);
+			
+			httpRequest.send(null);
+		}
+		
+	}
+</script>
+</head>
+
+<body>
+   			<input type = "button" value = "点击">
+
+</body>
+</html>

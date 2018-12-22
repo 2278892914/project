@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant value="spring" name="struts.objectFactory" />
+	
+	<package name="p1"  extends="struts-default">
+	<!-- 注册时查询所在部门 -->
+	<action name="department" class="dept" method="dept">
+		<result name="success">register.jsp</result>
+	</action>
+	
+	<!-- 注册员工信息 -->
+	<action name="regist" class="dept" method="regist">
+		<result name="success">login.jsp</result>
+		<result name="fail">register.jsp</result>
+	</action>
+	
+	<!-- 员工登录 -->	
+	<action name="login" class="login" method="login">
+		<result name="001" type="redirectAction">notifications.action</result>
+		<result name="002">login.jsp</result>
+		<result name="003">login.jsp</result>
+		<result name="004">login.jsp</result>
+	</action>
+	
+	<!-- 部门管理 -->
+	<action name="departments" class="login" method="lookdept">
+		<result name = "success">departments.jsp</result>
+	</action>
+	
+	<!-- 删除部门 -->
+	<action name = "deletedept" class="login" method="deldept">
+		<result name="success" type="redirectAction">departments.action</result>
+	</action>
+	<!-- 添加部门 -->
+	<action name="adddeptname" class="login" method="adddept">
+		<result name="success" type="redirectAction">departments.action</result>
+	</action>
+	
+	<!-- 注册审批 -->
+	<action name="approveaccount" class="login" method="regsapprove">
+		<result name="success">approveaccount.jsp</result>
+	</action>
+	
+	<!-- 通过员工注册 -->
+	<action name="approvestaff" class="login" method="approveworker">
+		<result name="success" type="redirectAction">approveaccount.action</result>
+	</action>
+	<!-- 不通过员工注册 -->
+	<action name="refusestaff" class="login" method="refuseworker">
+		<result name="success" type="redirectAction">approveaccount.action</result>
+	</action>
+	
+	<!-- 搜索员工         初始           状态已经审批 -->
+	<action name="searchemployees" class="SerchEmp" method="serchemp">
+		<param name="page">1</param>
+		<result name="success">searchemployees.jsp</result>
+	</action>                  
+	<!-- 搜索员工 -->
+	<action name="serchemp" class="SerchEmp" method="serchemp">
+	    <param name="page">1</param>
+		<result name="success">searchemployees.jsp</result>
+	</action>
+	<!-- 关闭账号 -->
+	<action name="closeaccount" class="SerchEmp" method="close">
+		<result name="success" type="redirectAction">serchemp.action</result>
+	</action>
+	
+	<!-- 添加会议室 -->
+	<action name="addmeeting" class="meeting" method="addmeeting">
+		<result name="success" type="redirectAction">meetingrooms.action</result>
+	</action>
+	
+	<!-- 查看会议室 -->
+	<action name="meetingrooms" class="meeting" method="lookmeetingrooms">
+		<result name="success">meetingrooms.jsp</result>
+	</action>
+	<!-- 查看会议室详情 -->
+	<action name="roomdetails" class="meeting" method="roomdetail">
+		<result name="success">roomdetails.jsp</result>
+	</action>
+	<!-- 更改会议室 -->
+	<action name="updatemeetingroom" class="meeting" method="updatemt">
+		<result name="success" type="redirectAction">meetingrooms.action</result>	
+	</action>	
+	<!-- 预定会议 -->
+	<action name="bookmeeting" class="bookmeet" method="lookmeetname">
+		<result name="success">bookmeeting.jsp</result>
+	</action>
+	<!--修改密码 -->
+	<action name="changepassword" class="password" method="updatepassword">
+		<result name="success">notifications.jsp</result>
+		<result name="fail01">changepassword.jsp</result>
+		<result name="fail02">changepassword.jsp</result>
+		<result name="fail03">changepassword.jsp</result>
+	</action>
+	<action name="bookmeeting_1" class="bookmeet" method="lookmeetname01">
+		<result name="success">bookmeeting.jsp</result>
+	</action>     
+	<action name="bookmeeting_2" class="bookmeet" method="lookmeetname02">
+		<result name="success">bookmeeting.jsp</result>
+	</action>
+	<action name="domeeting" class="bookmeet" method="domeet">
+		<result name="success" type="redirectAction">searchmeetings.action</result>
+	</action>
+	<action name="searchmeetings" class="serchmeet" method="serchmeeting">
+		<param name="page">1</param>
+		<result name="success">searchmeetings.jsp</result>
+	</action>
+	<!-- 查看会议室详情 -->
+	<action name="meetingdetails" class = "serchmeet" method="meetingdetails"> 
+		<result name="success">meetingdetails.jsp</result>
+	</action>
+	<!-- 查看我的通知 -->
+	<action name="notifications" class="notif" method="notifications">
+		<result>notifications.jsp</result>	
+	</action>
+	<!-- 查看我的预定 -->
+	<action name="mybookings" class="notif" method="mybook">
+		<result name="success">mybookings.jsp</result>
+	</action>
+	<action name="mymeetingdetails" class="notif" method="mymeetingdetails">
+		<result name="success">mymeetingdetails.jsp</result>
+	</action>
+	<!-- 撤销会议 -->
+	<action name="cancelmeeting" class="notif" method="cancel">
+		<result name="success">cancelmeeting.jsp</result>
+	</action>	
+	<!-- 撤销理由 -->
+	<action name="surecancelmeet" class="notif" method="updatereason">
+		<result   name="success" type="redirectAction">mybookings.action</result>
+	</action>
+	<!-- 我的会议 -->
+	<action name="mymeetings" class="notif" method="mymeeing">
+		<result name="success">mymeetings.jsp</result>
+	</action>
+	
+	
+	</package>
+</struts>

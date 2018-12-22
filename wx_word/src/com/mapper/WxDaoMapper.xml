@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，
+这样就能够保证namespace的值是唯一的 -->
+<mapper namespace="com.mapper.WxDaoMapper">
+    
+	<select id="selectlist" resultType="com.entity.Area">
+	  select * from t_first
+	</select>
+	
+	<!-- 查询单词 -->
+	<select id="selectword" parameterType="Map" resultType="com.entity.Word"> 
+	    select * from
+	   <if test="'p'.toString()==id">
+	     p_words
+	   </if> 
+	   <if test="'m'.toString()==id">
+	     m_words 
+	   </if> 
+	   <if test="'h'.toString()==id">
+	     h_words 
+	   </if> 
+	   <if test="'u'.toString()==id">
+	     u_words 
+	   </if> 
+	      limit #{statwith},#{plane}  
+	  
+	</select>
+		
+	<!--背诵单词  -->
+	<select id="reciteword" parameterType="Map" resultType="com.entity.Word">
+	   select * from
+	    <if test="'u'.toString()==t_id"> u_words </if>
+	    <if test="'h'.toString()==t_id"> h_words </if>
+	    <if test="'m'.toString()==t_id"> m_words </if>
+	    <if test="'p'.toString()==t_id"> p_words </if>  
+	     where id=#{w_id} and name=#{name}
+	</select>
+	
+	<!-- 更新单词状态 -->
+	<update id="updatawordstate" parameterType="Map">
+	        update  <if test="'u'.toString()==t_id"> u_words </if>
+	    <if test="'h'.toString()==t_id"> h_words </if>
+	    <if test="'m'.toString()==t_id"> m_words </if>
+	    <if test="'p'.toString()==t_id"> p_words </if>  
+	        set state=1 where id=#{w_id}
+	</update>
+	
+	<!-- 利用session，查找单词 -->
+	<select id="getword" resultType="com.entity.Word" parameterType="Map">
+	    <if test="'h'.toString()==t_id">
+	        select * from h_words where id = #{id}
+	    </if>
+	    <if test="'m'.toString()==t_id">
+	        select * from m_words where id = #{id}
+	    </if>
+	    <if test="'u'.toString()==t_id">
+	        select * from u_words where id = #{id}
+	    </if>
+	    <if test="'p'.toString()==t_id">
+	        select * from p_words where id = #{id}
+	    </if>
+	</select>
+	<!-- 获取用户信息 -->
+	<select id="getinfo" resultType="com.entity.User">
+	    select * from t_info where id=1
+	</select>
+	
+	<!-- 更改用户信息 -->
+	<update id="updateinfo" parameterType="com.entity.User">
+	    update t_info set email=#{email},phone=#{phone},plane=#{plane} where id=#{id}
+	</update>
+	
+	<!-- 查找用户基本信息 -->
+	<select id="getrecord" resultType="com.entity.User" parameterType="String">
+		select * from t_info where id = 1
+	</select>
+	<!-- 查找flag -->
+	<select id="getflag" parameterType="String" resultType="int">
+	    select
+	    
+	    <if test="'u'.toString()==t_id"> u_word </if>
+	    <if test="'h'.toString()==t_id"> h_word </if>
+	    <if test="'m'.toString()==t_id"> m_word </if>
+	    <if test="'p'.toString()==t_id"> p_word </if>
+	    
+	    from t_record where id = 1
+	</select>
+	
+	<!-- 更新falg -->
+	<update id="updateflag" parameterType="Map">
+	    update t_record set <if test="'u'.toString()==t_id"> u_word </if>
+	    <if test="'h'.toString()==t_id"> h_word </if>
+	    <if test="'m'.toString()==t_id"> m_word </if>
+	    <if test="'p'.toString()==t_id"> p_word </if>=#{flag} where id=1
+	</update> 
+	<!-- 更改id起始 -->
+	
+	<update id="tartwitdid" parameterType="Map">
+		update t_info set<if test="'u'.toString()==t_id"> u_word </if>
+	    <if test="'h'.toString()==t_id"> h_word </if>
+	    <if test="'m'.toString()==t_id"> m_word </if>
+	    <if test="'p'.toString()==t_id"> p_word </if>=#{plane} where id=1
+	</update>
+	
+	
+	
+	<!-- 让falg为0 -->
+	<update id="mupdateflag" parameterType="Map">
+	    update t_record set <if test="'u'.toString()==t_id"> u_word </if>
+	    <if test="'h'.toString()==t_id"> h_word </if>
+	    <if test="'m'.toString()==t_id"> m_word </if>
+	    <if test="'p'.toString()==t_id"> p_word </if>=0 where id=1
+	</update>
+	
+	<!-- 查询已经背过的单词的数量-->
+	<select id="yiwords" resultType="int">
+	    select count(*) from (select * from p_words union all select * from m_words union all select * from h_words union all select * from u_words) t_all where state=1
+	</select>
+	
+	
+	<!-- 查询未背单词的数量 -->
+	<select id="weiwords" resultType="int">
+	    select count(*) from (select * from p_words union all select * from m_words union all select * from h_words union all select * from u_words) t_all where state=0
+	</select>
+	
+	<!-- 查询已经背过的单词 -->
+	<select id="selectyiwords" resultType="com.entity.Word">
+	  select * from (select * from p_words union all select * from m_words union all select * from h_words union all select * from u_words) t_all where state=1  
+    </select>
+    
+	<!-- 查询未背过的单词 -->
+	<select id="selectweiwords" resultType="com.entity.Word">
+	  select * from (select * from p_words union all select * from m_words union all select * from h_words union all select * from u_words) t_all where state=0 
+    </select>
+	
+	
+			
+</mapper>

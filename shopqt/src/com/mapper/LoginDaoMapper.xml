@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名， 这样就能够保证namespace的值是唯一的 -->
+<mapper namespace="com.mapper.LoginDaoMapper">
+	<!-- 系统登录 -->
+	<select id="selectlogin" parameterType="com.entity.User" resultType="com.entity.User">
+		select * from user where username=#{username}  and password=#{password}
+ 	</select>
+ 	<!-- 找回密码第一步 -->
+ 	<select id="f_pass1" parameterType="com.entity.User" resultType="String">
+ 		select question from user where username=#{username}
+ 	</select>
+ 	<!-- 找回密码第二步 -->
+	<select id="f_pass2" parameterType="com.entity.User" resultType="com.entity.User">
+	select * from user where username=#{username} and answer=#{answer}
+	</select>
+	<!-- 找回密码第三，重置密码 -->
+	<update id="f_pass3" parameterType="com.entity.User">
+	update user set password = #{password} where username=#{username}
+	</update> 	
+ 	<!-- 我的个人信息 -->
+ 	<select id="user_info1" parameterType="String" resultType="com.entity.User">
+ 	select * from user where username = #{username}
+ 	</select>
+ 	<!-- 修改密码，先是查询原密码是否正确 -->
+ 	<select id="selectpassword" parameterType="String" resultType="String">
+ 	select password from user where username =  #{username}
+ 	</select>
+ 	<!-- 修改密码 -->
+ 	<update id="modifypassword" parameterType="Map">
+ 	update user set password = #{n_pass} where username = #{username}
+ 	</update>
+ 	
+ 	
+ 	
+</mapper>

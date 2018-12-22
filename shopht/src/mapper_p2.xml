@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="p2">
+	<!--添加商品详情-->
+	<insert id="add_sp_detail" parameterType="com.vo.Shopinf">
+	  INSERT INTO pl_information(name,state,num,price,descript,kind_pl,kind_zpl,spinfo)
+	   VALUES(#{name},#{state},#{num},#{price},#{descript},#{kind_pl},#{kind_zpl},#{spinfo})
+	</insert>
+	<!-- 展示商品大概信息 -->
+	<select id="commodity_list" resultType="com.vo.Shopinf">
+	 select id,name,price,state from pl_information
+	</select>
+	<!-- 展示商品详细情况 -->
+	<select id="commodity_info" parameterType="int" resultType="com.vo.Shopinf">
+	select pl_information.*,s_pl.pname,s_zpl.pcname from pl_information,s_pl ,s_zpl where 
+	 pl_information.id=#{id} and s_pl.id=(select kind_pl from pl_information  where id=#{id}) and 
+	  s_zpl.id=(select kind_zpl from pl_information where id=#{id})
+	</select>
+	<!-- 删除商品 -->
+	<delete id="delete_commodity_info" parameterType="int">
+	delete from pl_information where id=#{id}
+	</delete>
+	<!-- 临时追加的异步请求 -->
+	<select id="sa_findPlList" resultType="com.vo.PlVO">
+	select id,pname from s_pl
+	</select>
+	<!-- 更改商品状态信息 -->
+	<update id="sa_updateShopState" parameterType="com.vo.Shopinf">
+	update pl_information set state=#{state} where id=#{id}
+	</update>
+	<!-- 订单列表 -->
+	<select id="order_list" resultType="com.vo.Order">
+	select t.*,u.username from t_order t,user u where u.id=(select t.userid fromt)
+	</select>
+	<!-- 查询具体的某个订单 -->
+	<select id="select_order" parameterType="String" resultType="com.vo.Order">
+	select t.*,u.username from t_order t,user u where t.ordernum=#{id} and u.id=(select t.userid fromt)
+	</select>
+	<!-- 订单的具体情况 -->
+	<select id="order_info1" parameterType="int" resultType="com.vo.OrderInfo">
+	select t_order.id , t_order.ordernum,t_order.createtime,user.address,
+	user.username,t_order.goodstate,t_order.paytype ,
+	t_order.totalprice from t_order ,
+	user  where t_order.id=#{id} and
+	 user.id=(select userid from  t_order where t_order.id =#{id})
+	</select>
+	<select id="order_info2"  parameterType="int" resultType="com.vo.OrderInfo">
+	 select pl.name,pl.descript,pl.price,toi.sp_num 
+ from pl_information pl ,t_order_info toi where  toi.id=#{id}  
+ and pl.id in (select t_order_info.sp_id from t_order_info where t_order_info.t_id =#{id})
+	</select>
+	<!-- 删除订单 -->
+	<delete id="delete_order" parameterType="int">
+	delete from t_order where id=#{id}
+	</delete>
+	<!-- 发货 -->
+	<update id="sendgoods" parameterType="int">
+	update t_order set goodstate = 1 where id=#{id}
+	</update>
+
+
+
+
+
+
+
+
+</mapper>
