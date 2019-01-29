@@ -1,0 +1,38 @@
+.row text {
+  flex-grow: 1;
+  margin-bottom: 50rpx;
+  display: block;
+  margin-left: 15rpx;
+}
+
+.color {
+  font-size: 1.3rem;
+  flex-grow: 3;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 0.15rem #aaa;
+  padding: 0.3rem;
+  color: #52cc00;
+  text-align: center;
+}
+
+.row {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.useravata {
+  display: flex;
+  justify-content: center;
+}
+
+.userinfo-avatar {
+  padding-top: 20px;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}

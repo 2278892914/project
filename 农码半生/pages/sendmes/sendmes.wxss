@@ -1,0 +1,44 @@
+/* pages/t4/t4.wxss */
+.t4{
+  width: 100%;
+  height: 100%;
+  
+}
+
+.t4-1{
+  float: left;
+  margin-top: 10px;
+  width: 100%;
+  height:6%;
+}
+.t4-11{
+  float: left;
+  margin-left: 0%;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.t4-2{
+  float: left;
+  width: 100%;
+  height: 20%;
+  margin-top: 3%;
+}
+.t4-21{
+  float: left;
+  margin-left: 0%;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.t4-3{
+  float: left;
+  width: 90%;
+  height: 40px;
+  background: #0dcf06;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 5%;
+}

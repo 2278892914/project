@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/begin/index",
+    "pages/comment/comment",
+    "pages/index/index",
+    "pages/sendmes/sendmes",
+    "pages/kc_video/kc_video",
+    "pages/kc_video_info/kc_video_info",
+    "pages/t1/t1",
+    "pages/my/myIndex"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#055645",
+    "navigationBarTitleText": "小程序练习",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "selectedColor": "#00f",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/2.png",
+        "selectedIconPath": "images/3.png"
+      },
+      {
+        "pagePath": "pages/kc_video/kc_video",
+        "text": "视频",
+        "iconPath": "images/5.png",
+        "selectedIconPath": "images/6.png"
+      },
+      {
+        "pagePath": "pages/my/myIndex",
+        "text": "我的",
+        "iconPath": "images/1.png",
+        "selectedIconPath": "images/4.png"
+      }
+    ]
+  }
+}

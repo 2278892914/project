@@ -1,0 +1,28 @@
+<!--index.
+../../images/search.png
+
+wxml-->
+<view class="container">
+
+  <view class='c_header'>
+    <view class='c_header2'>
+      <image src='../../images/search.png'></image>
+      <input placeholder='请输入...' bindinput="changeFun"></input>
+      <button bindtap='findQue'>搜索</button>
+    </view>
+    <view class='c_header1'>
+      <text bindtap='findallcomment'>全部</text>
+      <text>      </text>
+      <!--<text bindtap='findcommentimage'>图片</text>-->
+      <text bindtap='send'>发帖</text>
+    </view>
+  </view>
+  <view class='c_info'>
+    <view class='c_content' wx:for="{{question}}" wx:key="asd">
+      <image src='{{item.head_image}}'></image>
+      <text bindtap='comment' data-id='{{item.id}}'>{{item.title}}</text>
+      <text class='c_date'>{{item.date}}</text>
+    </view>
+  </view>
+
+</view>

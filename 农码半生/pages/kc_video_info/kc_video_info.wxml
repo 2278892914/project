@@ -1,0 +1,37 @@
+<view class="container">
+
+  <view class="video_bf">
+    <video id="myVideo" src="{{video_url}}" danmu-list="{{danmuList}}" enable-danmu danmu-btn controls></video>
+  </view>
+  <view class="video_gt">
+    <text>跟帖</text>
+  </view>
+  <view class='video_pl'>
+    <view wx:for='{{comment}}' wx:key="asd">
+      <view class='video_pl_info'>
+        <view class="video_pl_head">
+          <image src='{{item.image}}'></image>
+          <text>{{item.name}}</text>
+          <text>{{item.date}}</text>
+        </view>
+        <view class="video_pl_con">
+          <text>{{item.comment}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='send_pl' wx-if="{{send1}}">
+    <image src='../../images/write.png'></image>
+    <input placeholder='发表评论......' bindfocus='focusFun'></input>
+  </view>
+  <view class='send_pl_info' wx-if="{{send2}}">
+    <view class='send_pl_info_p'>
+      <text class='tx'>评论跟帖</text>
+      <text class='send'>发送</text>
+    </view>
+    <view>
+      <textarea bindblur="bindInputBlur"></textarea>
+    </view>
+  </view>
+
+</view>

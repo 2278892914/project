@@ -1,0 +1,30 @@
+<view class="container">
+
+
+  <view class='header'>
+    <block wx:for="{{video_type}}" wx:key="asd">
+      <button bindtap='findtypevideo' data-id='{{item.id}}'>{{item.type}}</button>
+    </block>
+  </view>
+
+  <view class='content'>
+
+    <view wx:for="{{video}}" wx:key="asd">
+
+      <view class='content_kc'>
+        <view class='kc_left'>
+          <view>
+            <image class='image' src='{{item.image}}'></image>
+          </view>
+        </view>
+        <view class='kc_right'>
+          <text class='kc_title'>{{item.video_name}}</text>
+          <text class='kc_sm'>{{item.video_introduce}}</text>
+          <button class='kc_bf' bindtap='lookvideo' data-video_id='{{item.id}}'>播放</button>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</view>

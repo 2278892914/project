@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="widget">
+  <view class="useravata">
+      <image bindtap="bindViewTap" class='userinfo-avatar' src="{{user.avatarUrl}}" mode="cover"></image>
+      
+      </view>
+    <view class="row">
+      <text>用户昵称 ：   {{user.nickName}}</text>
+      <text>所在城市 ：   {{user.city}}</text> 
+      <text>发帖数量 ：   {{user.send_num}}</text>
+      <text>评论数量 :    {{user.comment_num}}</text>
+      <text>观看次数 :    {{user.look_num}}</text>
+    </view>
+    </view>
+</view>
